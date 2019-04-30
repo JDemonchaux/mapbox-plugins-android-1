@@ -11,6 +11,7 @@ import timber.log.Timber;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import java.util.ArrayList;
 
 import java.util.Objects;
 
@@ -89,4 +90,16 @@ public class CircleManagerTest extends BaseActivityTest {
       assertEquals((String) circleManager.getCirclePitchAlignment(), (String) CIRCLE_PITCH_ALIGNMENT_MAP);
     });
   }
+
+  // regression test for https://github.com/mapbox/mapbox-plugins-android/issues/854#issuecomment-487719163
+  @Test
+  public void testEmptyDelete() {
+    validateTestSetup();
+    setupCircleManager();
+    invoke(mapboxMap, (uiController, mapboxMap) -> {
+      assertNotNull(circleManager);
+      circleManager.delete(new ArrayList<>());
+    });
+  }
+
 }

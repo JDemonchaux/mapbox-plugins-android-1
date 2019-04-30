@@ -11,6 +11,7 @@ import timber.log.Timber;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import java.util.ArrayList;
 
 import java.util.Objects;
 
@@ -362,4 +363,16 @@ public class SymbolManagerTest extends BaseActivityTest {
       assertEquals((String) symbolManager.getTextTranslateAnchor(), (String) TEXT_TRANSLATE_ANCHOR_MAP);
     });
   }
+
+  // regression test for https://github.com/mapbox/mapbox-plugins-android/issues/854#issuecomment-487719163
+  @Test
+  public void testEmptyDelete() {
+    validateTestSetup();
+    setupSymbolManager();
+    invoke(mapboxMap, (uiController, mapboxMap) -> {
+      assertNotNull(symbolManager);
+      symbolManager.delete(new ArrayList<>());
+    });
+  }
+
 }

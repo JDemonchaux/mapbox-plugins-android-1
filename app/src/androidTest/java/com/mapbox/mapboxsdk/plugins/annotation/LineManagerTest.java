@@ -11,6 +11,7 @@ import timber.log.Timber;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import java.util.ArrayList;
 
 import java.util.Objects;
 
@@ -115,4 +116,16 @@ public class LineManagerTest extends BaseActivityTest {
       assertEquals((Float[]) lineManager.getLineDasharray(), (Float[]) new Float[] {});
     });
   }
+
+  // regression test for https://github.com/mapbox/mapbox-plugins-android/issues/854#issuecomment-487719163
+  @Test
+  public void testEmptyDelete() {
+    validateTestSetup();
+    setupLineManager();
+    invoke(mapboxMap, (uiController, mapboxMap) -> {
+      assertNotNull(lineManager);
+      lineManager.delete(new ArrayList<>());
+    });
+  }
+
 }
